@@ -1,11 +1,6 @@
 #include<iostream.h>
 #include<conio.h>
-int stack[5000]; //create an array for stack operations
-int top,x;
-void push(int x){ //function for push
-top = top+1;
-stack[top]=x;
-}
+
 void main()
 {
 	clrscr();
@@ -21,11 +16,7 @@ void main()
 		cout<<"Seat numbers which gets 7-UP T-shirt are : "<<endl;
 		int count=0;
 		for(i=201;i<=max-400;i++){
-			count++;
-			if(count==7){
-			push(i); //pushes the value of array into the stack for every 7th array position
-			cout<<stack[top]<<" ";
-			count=0;
+			cout<<arr[i]<<endl;//prints the seat numbers from 200 to max-400,
 			}
 		}
 		getch();
