@@ -1,3 +1,13 @@
+/*  Given an array arr[] of n non-negative integers representing the height of blocks. If width of each block is 1, compute how much water can be trapped between the blocks during the rainy season.
+
+Expected Time Complexity: O(n)
+Expected Auxiliary Space: O(n)
+
+1. Input: arr[] = {3,0,0,2,0,4}
+Output: 10
+Explanation: 
+Bars : 3,0,0,2,0,4; so, Trapped water: 0+3+3+1+3=10 */
+
 #include<iostream.h>
 #include<conio.h>
 int stack[100],top;
@@ -22,7 +32,7 @@ int maxwater(int height[],int n)
 	{
 		int pop_height = height[stack[top]];
 		pop();
-		if(stack[top]==0)
+		if(top<0)
 			break;
 		int distance = i - stack[top] -1;
 		int min_height = min(height[stack[top]],height[i]) - pop_height;
