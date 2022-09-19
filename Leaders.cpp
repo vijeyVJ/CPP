@@ -9,31 +9,25 @@ a. Input: A[] = {16,17,4,3,5,2}
 Output: 17 5 2 */
 #include<iostream.h>
 #include<conio.h>
-//create an array called stack for push and pop operations
-int stack[100];
-int top,x;
-void push (int x)
-{
-	top = top+1;
-	stack[top]=x;
-}
-void pop(){
-	top--;
-}
-void Leader(int arr[],int size){  //function to find the leaders in the array
-	push(arr[size-1]);  //push the value of last element into stack top
 
-	for(int i=size-2; i>=0; i--)
+/* C++ Function to print leaders in an array */
+
+void printLeaders(int arr[], int size)
+{
+	cout<<"The leaders are :";
+	for (int i = 0; i < size; i++)
 	{
-		if(arr[i]>stack[top]){
-		push(arr[i]); //push the new value if the value of array is greater than value on stack top
+		for (int j = i+1; j < size; j++)
+		{
+			if (arr[i] <=arr[j])
+				break;
 		}
-	}
-	while(stack[top]!=0){
-	cout<<" "<<stack[top];
-	pop();
+		if (j == size) // the loop didn't break
+			cout << arr[i] << " ";
 	}
 }
+
+/* Driver program to test above function */
 void main()
 {
 	clrscr();
@@ -44,6 +38,6 @@ void main()
 	int *arr = new int(size);//creating dynamic array
 	for(int i=0;i<size;i++)
 		cin>>arr[i];//getting the values of array from user
-	Leader(arr,size);
+	printLeaders(arr,size);
 	getch();
 }
