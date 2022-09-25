@@ -1,3 +1,5 @@
+/* Given a binary tree find its height*/
+
 #include<iostream.h>
 #include<conio.h>
 
@@ -23,7 +25,7 @@ int height(Node *root) //function to calculate height of the tree
 	return 1 + max(height(root->left),height(root->right));
 
 }
-int main()
+void main()
 {
 	clrscr();
 	Node *root = new Node(15);
@@ -36,5 +38,4 @@ int main()
 
 	cout<<"the Height of the binary tree is :"<<height(root);
 	getch();
-	return 0;
 }
