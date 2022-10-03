@@ -1,119 +1,88 @@
 #include<iostream.h>
 #include<conio.h>
-struct Node
+class Node1
 {
-    char data;
-    struct Node *next;
+public:
+char var1;
+Node1 *next1;
+Node1(char v,Node1 *next1=NULL):var1(v),next1(next1){}
 };
-/* Function to add new node to the List */
-Node *newNode(char key)
+Node1 *make_list(char array1[],int size1)
 {
-    Node *temp = new Node;
-    temp->data = key;
-    temp->next = NULL;
-    return temp;
+if(size1 ==0)
+return NULL;
+else {
+Node1 *head = new Node1('o');
+Node1 *temp = head;
+for(int i=0;i<size1;++i) {
+temp->next1 = new Node1(array1[i]);
+temp=temp->next1;
 }
-// utility function to print linked list
-void printlist(Node *head)
+temp=head;
+head = head->next1;
+delete temp;
+return head;
+}
+}
+void print_list(Node1 *head)
 {
-    if (! head)
-    {
-	cout << "Empty List";
-	return;
-    }
-    while (head != NULL)
-    {
-	cout << head->data << " ";
-	if (head->next)
-	   cout << "-> ";
-	head = head->next;
-    }
-    cout << endl;
+while(head){
+cout<<head->var1<<"--";
+head = head->next1;
 }
-
-// utility function for checking vowel
-int isVowel(char x)
+cout<<"END"<<endl;
+}
+void insertAfter(Node1** temp,Node1 *n)
 {
-    return (x == 'a' || x == 'e' || x == 'i' ||
-	    x == 'o' || x == 'u');
+n->next1 = (*temp)->next1;
+(*temp)->next1 = n;
 }
-
-/* function to arrange consonants and
-   vowels nodes */
-Node *arrange(Node *head)
+int isVowel(char v)
 {
-    Node *newHead = head;
-
-    // for keep track of vowel
-    Node *latestVowel;
-    Node *curr = head;
-    if (head == NULL)
-	return NULL;
-    // We need to discover the first vowel
-    if (isVowel(head->data))
-	latestVowel = head; //if first element is vowel it will be the head
-
-    else //if first elemt is not vowel iterate throught the list to find the next vowel
-    {
-	// Note that curr points to the element
-	// *before* the element with the vowel.
-	while (curr->next != NULL && !isVowel(curr->next->data))
-	    curr = curr->next;
-
-	if (curr->next == NULL)
-	    return head;
-
-	latestVowel = newHead = curr->next;
-	curr->next = curr->next->next;
-	latestVowel->next = head;
-    }
-
-    while (curr != NULL && curr->next != NULL)
-    {
-	if (isVowel(curr->next->data))
-	{
-	    // The next discovered item is a vowel
-	    if (curr == latestVowel)
-	    {
-		latestVowel = curr = curr->next;
-	    }
-	    else
-	    {
-
-		Node *temp = latestVowel->next;
-		latestVowel->next = curr->next;
-		latestVowel = latestVowel->next;
-		curr->next = curr->next->next;
-		latestVowel->next = temp;
-	    }
-	}
-	else
-	{
-	    curr = curr->next;
-	}
-    }
-    return newHead;
+switch(v)
+{
+case 'A':
+case 'E':
+case 'I':
+case 'O':
+case 'U':
+return 1;
+default:
+return 0;
 }
-
-
+}
+Node1 *groupByVowels(Node1 *head)
+{
+Node1 *vowel=NULL,*consonant=NULL;
+vowel = new Node1('L');
+consonant = new Node1('C');
+Node1 *tv = vowel,*tc=consonant;
+for(Node1 *temp=head;temp;)
+{
+Node1 *tt = temp->next1;
+if(isVowel(temp->var1)){
+insertAfter(&tv,temp);
+tv = tv->next1;
+}
+else {
+insertAfter(&tc,temp);
+tc=tc->next1;
+}
+temp = tt;
+}
+tv->next1 = consonant->next1;
+tv = vowel;
+vowel=vowel->next1;
+delete tv;
+return vowel;
+}
 void main()
 {
-    clrscr();
-    Node *head = newNode('a');
-    head->next = newNode('b');
-    head->next->next = newNode('c');
-    head->next->next->next = newNode('e');
-    head->next->next->next->next = newNode('d');
-    head->next->next->next->next->next = newNode('o');
-    head->next->next->next->next->next->next = newNode('x');
-    head->next->next->next->next->next->next->next = newNode('i');
-
-    cout<<"Linked list before :";
-    printlist(head);
-
-    head = arrange(head);
-
-    cout<<"Linked list after :";
-    printlist(head);
-    getch();
-} 
+clrscr();
+char array1[] = {'A','M','A','Z','O','N'};
+Node1 *head = make_list(array1,sizeof(array1)/sizeof(array1[0]));
+print_list(head);
+head = groupByVowels(head);
+print_list(head);
+getch();
+}
